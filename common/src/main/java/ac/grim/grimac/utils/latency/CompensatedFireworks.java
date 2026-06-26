@@ -1,5 +1,7 @@
 package ac.grim.grimac.utils.latency;
 
+import ac.grim.grimac.checks.CheckData;
+
 import ac.grim.grimac.checks.Check;
 import ac.grim.grimac.checks.type.PostPredictionCheck;
 import ac.grim.grimac.player.GrimPlayer;
@@ -8,6 +10,7 @@ import ac.grim.grimac.utils.anticheat.update.PredictionComplete;
 import java.util.HashSet;
 import java.util.Set;
 
+@CheckData(name = "CompensatedFireworks")
 public class CompensatedFireworks extends Check implements PostPredictionCheck {
 
     // As this is sync to one player, this does not have to be concurrent

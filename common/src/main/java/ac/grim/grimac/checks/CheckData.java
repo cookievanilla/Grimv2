@@ -22,12 +22,14 @@ public @interface CheckData {
      * legacy/unpopulated — the runtime will fall back to
      * {@code StableKeyMapping} during rollout and log a warning.
      */
-    String stableKey();
+    String stableKey() default "";
 
     double decay() default 0.05;
 
     double setback() default 25;
 
     boolean experimental() default false;
+
+    boolean configurable() default true;
 
 }

@@ -1,18 +1,28 @@
 # GrimAC main configuration
+# Главная конфигурация GrimAC
 # Source code: https://github.com/MWHunter/Grim
+# Исходный код: https://github.com/MWHunter/Grim
 # Copyright 2025 DefineOutside and contributors, Licensed under GPLv3.
+# Авторские права 2025 DefineOutside и контрибьюторы, Лицензия GPLv3.
 # Modified binaries, or plugins with copied grim code, must be private,
+# Измененные бинарные файлы или плагины со скопированным кодом grim должны быть приватными,
 # or with full source code available to buyers at no additional cost.
+# или предоставляться с полным исходным кодом покупателям без дополнительной платы.
 
 alerts:
     # In addition to broadcasting alerts to players, should they also be sent to the console?
+    # В дополнение к трансляции оповещений игрокам, должны ли они также отправляться в консоль?
     print-to-console: true
     # This controls whether/how alerts are shared between servers connected to your proxy.
+    # Это определяет, как оповещения передаются между серверами, подключенными к вашему прокси.
     # You must have 'bungee-plugin-message-channel' enabled in your Velocity's configuration if Velocity is in use.
+    # Если используется Velocity, в его конфигурации должен быть включен параметр 'bungee-plugin-message-channel'.
     proxy:
         # Should alerts be sent to other servers connected to your proxy?
+        # Должны ли оповещения отправляться на другие серверы, подключенные к вашему прокси?
         send: false
         # Should the alerts received from other servers be announced to this server?
+        # Должны ли оповещения, полученные от других серверов, объявляться на этом сервере?
         receive: false
 
 verbose:
@@ -22,6 +32,7 @@ check-for-updates: true
 
 client-brand:
     # This means it won't broadcast their brand to operators if the brand matches the following regexes
+    # Это означает, что бренд клиента не будет транслироваться операторам, если он соответствует следующим регулярным выражениям
     ignored-clients:
         - "^vanilla$"
         - "^fabric$"
@@ -30,65 +41,98 @@ client-brand:
         - "^Feather Fabric$"
         - "^labymod$"
     # Grim will blacklist specific Forge versions which include built-in Reach hacks (Forge 1.18.2 to 1.19.3).
+    # Grim будет вносить в черный список определенные версии Forge, содержащие встроенные читы Reach (Forge 1.18.2 - 1.19.3).
     # Setting this option to false will allow said clients to connect to the server. Disable this at your own risk.
+    # Установка этого значения в false позволит таким клиентам подключаться к серверу. Отключайте на свой страх и риск.
     disconnect-blacklisted-forge-versions: true
 
 spectators:
     # Hide all spectators with the grim.spectator permission regardless if they are actually actively spectating
+    # Скрывать всех наблюдателей с разрешением grim.spectator независимо от того, ведут ли они активное наблюдение
     hide-regardless: false
     # Will make spectators hidden only in these worlds, keep blank to allow all worlds
+    # Скрывать наблюдателей только в этих мирах, оставьте пустым, чтобы разрешить все миры
     allowed-worlds:
         - ""
 
 # How long should players have until we kick them for timing out? Default = 60 seconds
+# Сколько времени есть у игроков, прежде чем мы кикнем их за превышение времени ожидания? По умолчанию = 60 секунд
 max-transaction-time: 60
 
 # Enable this to stop Grim cancelling pongs received from players.
+# Включите это, чтобы Grim перестал отменять pongs-пакеты, полученные от игроков.
 # This may improve compatibility with other anticheats. It may cause issues with packet limiters.
+# Это может улучшить совместимость с другими античитами. Может вызвать проблемы с лимитерами пакетов.
 # Do not enable this if you are not sure what you are doing.
+# Не включайте это, если вы не уверены в том, что делаете.
 disable-pong-cancelling: false
 
 # Should the default block resynchronization handler be disabled?
+# Должен ли быть отключен обработчик повторной синхронизации блоков по умолчанию?
 # By default, Grim reads blocks from the server world and sends them to the client to fix desync.
+# По умолчанию Grim считывает блоки из серверного мира и отправляет их клиенту для устранения рассинхронизации.
 # If you use plugins that create fake packet-based blocks (which don't exist in the server world),
+# Если вы используете плагины, создающие ложные пакетные блоки (которых нет в серверном мире),
 # you should set this to true to prevent Grim from overwriting them with air/real blocks.
+# вам следует установить это значение в true, чтобы Grim не перезаписывал их воздухом или реальными блоками.
 # This forces the use of a "NoOp" (No Operation) handler unless a custom one is provided via API.
+# Это принудительно активирует обработчик "NoOp" (бездействие), если через API не предоставлен кастомный.
 disable-default-resync-handler: false
 
 # Should the duplicate movement packet be cancelled?
+# Должен ли дублирующий пакет движения отменяться?
 # Mojang has fixed this issue in 1.21. This was their attempt to fix the "bucket desync". https://bugs.mojang.com/browse/MC-12363
+# Mojang исправили эту проблему в 1.21. Это была их попытка исправить рассинхронизацию ведер. https://bugs.mojang.com/browse/MC-12363
 # This setting only applies to 1.17-1.20.5 clients on 1.8 servers.
+# Эта настройка применяется только к клиентам 1.17-1.20.5 на серверах 1.8.
 cancel-duplicate-packet: true
 
 # Whether or not to ignore the rotation in duplicate packets
+# Игнорировать или нет вращение в дублирующих пакетах
 ignore-duplicate-packet-rotation: false
 
 Simulation:
     # How much should we multiply total advantage by when the player is legit
+    # На сколько умножать общее преимущество (advantage), когда игрок легитен
     # This is what the default config looks like (x axis = seconds, y axis = 1/1000 block): https://www.desmos.com/calculator/d4ufgxrxer
+    # График стандартной конфигурации (ось x = секунды, ось y = 1/1000 блока): https://www.desmos.com/calculator/d4ufgxrxer
     setback-decay-multiplier: 0.999
     # How large of an offset from the player's movement should we create a violation for?
+    # Какое смещение относительно возможного движения игрока должно вызывать нарушение?
     # Measured in blocks from the possible movement
+    # Измеряется в блоках от возможного перемещения
     # We account for Optifine by switching trig tables but dropping this to 0.001 will reduce FastMath
+    # Мы учитываем Optifine переключением тригонометрических таблиц, но снижение до 0.001 уменьшит ложные
     # flagging the anticheat if this compensation doesn't work...
+    # срабатывания на FastMath, если эта компенсация не сработает...
     threshold: 0.001
     # How large of a violation in a tick before the player gets immediately setback?
+    # Какое нарушение за один тик должно вызывать мгновенный откат (setback) игрока?
     # -1 to disable
+    # -1 для отключения
     immediate-setback-threshold: 0.1
     # How large of an advantage over all ticks before we start to setback?
+    # Какое накопленное преимущество по всем тикам запускает откат?
     # -1 to disable
+    # -1 для отключения
     max-advantage: 1
     # After 50 seconds with default config, the player will go from 4 blocks -> 1 block of advantage
+    # Через 50 секунд со стандартным конфигом преимущество игрока снизится с 4 блоков до 1 блока
     # This is to stop the player from gathering too many violations and never being able to clear them all
+    # Это нужно для того, чтобы игрок не накапливал слишком много нарушений, которые невозможно очистить
     # Default advantage ceiling (x axis = seconds, y axis = 1/1000 block): https://www.desmos.com/calculator/4lovswdarj
+    # Лимит преимущества по умолчанию (ось x = секунды, ось y = 1/1000 блока): https://www.desmos.com/calculator/4lovswdarj
     max-ceiling: 4
     # Violation level threshold for setback
+    # Порог уровня нарушений для отката
     # 1 for old behavior
+    # 1 для старого поведения
     setback-violation-threshold: 1
 
 # Checks to see if a player entered a block during a movement
+# Проверяет, зашел ли игрок внутрь блока во время движения
 Phase:
-    setbackvl: 1 # Glitching into blocks can allow wall climbing, plus this check is relatively stable
+    setbackvl: 1 # Glitching into blocks can allow wall climbing, plus this check is relatively stable / Прохождение сквозь блоки может позволить карабкаться по стенам, к тому же эта проверка относительно стабильна
     decay: 0.005
 
 AirLiquidPlace:
@@ -107,31 +151,47 @@ RotationPlace:
     cancelvl: 5
 
 # Prediction-based no slow check
+# Проверка замедления (no slow) на основе предсказания движения
 # Grim accounts for buggy netcode here... hard to false even when spamming right click and offhand button
+# Grim учитывает баги сетевого кода... сложно вызвать ложные срабатывания даже при спаме ПКМ и кнопки левой руки
 # Much more stable than other anticheats, but please report any falses... I have fixed a ton of netcode issues here.
+# Гораздо стабильнее других античитов, но, пожалуйста, сообщайте о ложных срабатываниях... Я исправил здесь кучу сетевых багов.
 NoSlow:
     # How much of an offset is "cheating"
+    # Какой сдвиг считается читерством
     # By default this is lower than other offs
+    # По умолчанию это значение ниже, чем в других проверках
     # Flags by 0.03-0.2 consistently with NoSlow on
+    # Стабильно флагует на 0.03-0.2 при включенном NoSlow
     threshold: 0.001
     # Setback fast on the first item to remove any advantage NoSlow gives
+    # Быстрый откат на первом же предмете, чтобы убрать любое преимущество от NoSlow
     setbackvl: 5
     # Decay's when the player uses an item AND is slowed by it
+    # Снижается (decay), когда игрок использует предмет И замедляется им
     decay: 0.05
 
 Knockback:
     # How much should we multiply total advantage by when the player is legit
+    # На сколько умножать общее преимущество (advantage), когда игрок легитен
     setback-decay-multiplier: 0.999
     # How large of an offset from the player's velocity should we create a violation for?
+    # Какое отклонение от скорости игрока должно создавать нарушение?
     # Measured in blocks from the possible velocity
+    # Измеряется в блоках от возможной скорости
     threshold: 0.001
     # How large of a violation in a tick before the player gets immediately setback?
+    # Какое нарушение за один тик должно вызывать мгновенный откат (setback) игрока?
     # -1 to disable
+    # -1 для отключения
     immediate-setback-threshold: 0.1
     # How large of an advantage over all ticks before we start to setback?
+    # Какое накопленное преимущество по всем тикам запускает откат?
     # -1 to disable
+    # -1 для отключения
     max-advantage: 1
     # This is to stop the player from gathering too many violations and never being able to clear them all
+    # Это нужно для того, чтобы игрок не накапливал слишком много нарушений, которые невозможно очистить
     max-ceiling: 4
 
 Explosion:
@@ -141,63 +201,461 @@ Explosion:
 TimerA:
     setbackvl: 10
     # Milliseconds that the player can accumulate for later use when they fall behind
+    # Миллисекунды, которые игрок может накопить для последующего использования, если он отстает
     # Could potentially allow 1.8 fast use/fast heal/fast bow bypasses if set too high, 120 ms seems like a good balance
+    # Может потенциально позволить обходы fast use/fast heal/fast bow на 1.8 при завышенных значениях, 120 мс видится хорошим балансом
     drift: 120
 
 # This check limits abuse of the TimerA balance by preventing the player's movement falling too far behind realtime
+# Эта проверка лимитирует злоупотребление балансом TimerA, предотвращая слишком сильное отставание движения игрока от реального времени
 TimerLimit:
     # Ping at which the check will start to limit timer balance, to prevent abuse.
+    # Пинг, при котором проверка начнет лимитировать баланс таймера для предотвращения абуза.
     # Can cause some setbacks for legitimate players but only if they are over this ping threshold.
+    # Может вызывать некоторые откаты у легитных игроков, но только если их пинг превышает этот порог.
     # -1 to disable
+    # -1 для отключения
     ping-abuse-limit-threshold: 1000
 
 NegativeTimer:
     # Number of milliseconds lost while moving before we should start flagging
+    # Количество миллисекунд, потерянных при движении, прежде чем начнется флаггинг
     drift: 1200
 
 # Same check method as TimerA, but for vehicles
+# Тот же метод проверки, что и в TimerA, но для транспорта
 VehicleTimer:
     # Target 1.005 timer
+    # Целевой таймер 1.005
     setbackvl: 10
 
 PacketOrderI:
     # enable if players are getting flagged for using 1.7 animations mods
+    # включите, если игроков флагует за использование модов на анимации 1.7
     exempt-placing-while-digging: false
 
 Reach:
     # How much should we expand hitboxes by? 0.0005 should detect 3.0005+ reach
+    # На сколько мы должны расширять хитбоксы? 0.0005 должно детектировать reach 3.0005+
     #
     # There is 0.03 forced expansion with 1.9-1.18.1 (not 1.18.2), or some client/server combinations due to
+    # Присутствует принудительное расширение на 0.03 для версий 1.9-1.18.1 (кроме 1.18.2) или в некоторых связках клиент/сервер из-за
     # protocol changes and limitations. This check is most powerful with 1.7/1.8 clients on 1.8 servers.
+    # изменений протокола и ограничений. Эта проверка наиболее эффективна с клиентами 1.7/1.8 на серверах 1.8.
     threshold: 0.0005
     # Should we cancel hits that we know are impossible?
+    # Должны ли мы отменять удары, которые заведомо невозможны?
     # 3.00-3.03 hits may go through but still be flagged, due to packet order limitations
+    # Удары на расстоянии 3.00-3.03 могут проходить, но все равно флагуются из-за ограничений порядка пакетов
     block-impossible-hits: true
     # This will send an additional packet at the end of every tick to increase the likelihood of catching cheats
+    # Это отправит дополнительный пакет в конце каждого тика, чтобы увеличить вероятность поимки читов
     # This injects into server's connection list to send a final packet just before the server flushes
+    # Это внедряется в список соединений сервера для отправки финального пакета непосредственно перед сбросом буфера сервера (flush)
     # Enabling this will increase bandwidth usage for all players
+    # Включение этого увеличит использование пропускной способности канала (трафика) для всех игроков
     # This will not decrease overall server performance
+    # Это не снизит общую производительность сервера
     # Enabling this will catch more cheaters.
+    # Включение этой опции позволит ловить больше читеров.
     # Leaving this disabled will still catch cheaters and will not cause false positives
+    # Если оставить отключенной, читеры все равно будут ловиться и это не вызовет ложных срабатываний
     # Unless you are a 1.8 PvP focused server, this additional packet is not recommended
+    # Если вы не являетесь сервером с упором на PvP версии 1.8, этот дополнительный пакет не рекомендуется
     enable-post-packet: false
 
 exploit:
     # You can gain high speeds when sprint jumping with an elytra, this prevents the exploit when set to false
+    # Вы можете развивать высокие скорости при прыжках на бегу с элитрами, это предотвращает данный баг при установке в false
     # Mojang screwed up netcode by making elytra start client sided and elytra end server sided
+    # Mojang испортили сетевой код, сделав старт полета на элитрах на стороне клиента, а завершение — на стороне сервера
     # Elytras take 0.99 horizontal friction, so constantly adding 0.2 horizontal speeds results in very high speeds.
+    # Элитры имеют горизонтальное трение 0.99, поэтому постоянное добавление 0.2 к горизонтальной скорости приводит к огромным скоростям.
     allow-sprint-jumping-when-using-elytra: true
     # This option mitigates the player's placement on ghostblocks by resynchronizing the player when it happens
+    # Эта опция смягчает размещение блоков игроком на призрачных блоках (ghostblocks), ресинхронизируя игрока при возникновении
     allow-building-on-ghostblocks: true
     # This setting, influenced by the boolean above defines the distance to check for ghost blocks
+    # Этот параметр, зависящий от логического значения выше, определяет расстояние для проверки призрачных блоков
     # Its valid range is limited from 2 to 4
+    # Его допустимый диапазон ограничен от 2 до 4
     distance-to-check-if-ghostblocks: 2
 
 # Enable logging plugins who have injected into netty on join to debug compatibility issues
+# Включить логирование плагинов, внедрившихся в netty при входе, для отладки проблем совместимости
 debug-pipeline-on-join: false
 
 # Enables experimental checks
+# Включает экспериментальные проверки
 experimental-checks: false
+
+checks:
+    # Detects identical Yaw/Pitch angles (common in simple aimbots).
+    # Обнаруживает абсолютно идентичные углы Yaw/Pitch (характерно для простых аимботов).
+    AimDuplicateLook:
+        enabled: true
+    # Detects head rotation modulo bypasses.
+    # Детектирует обход лимитов углов поворота головы.
+    AimModulo360:
+        enabled: true
+    # Yaw/pitch snap and pattern analysis. CRITICAL: Disabling breaks all Aim checks.
+    # Анализ резких движений и паттернов yaw/pitch. КРИТИЧЕСКИ: отключение ломает все проверки Aim.
+    AimProcessor:
+        enabled: true
+    AirLiquidBreak:
+        enabled: true
+    AirLiquidPlace:
+        enabled: true
+    # BadPacketsA-Z: Blocks invalid/exploitive packets (e.g. BadPacketsW: hitting nonexistent entity).
+    # BadPacketsA-Z: Блокирует некорректные пакеты (например, BadPacketsW: удары по несуществующим сущностям).
+    BadPacketsA:
+        enabled: true
+    BadPacketsB:
+        enabled: true
+    BadPacketsC:
+        enabled: true
+    BadPacketsD:
+        enabled: true
+    BadPacketsE:
+        enabled: true
+    BadPacketsF:
+        enabled: true
+    BadPacketsG:
+        enabled: true
+    BadPacketsH:
+        enabled: true
+    BadPacketsI:
+        enabled: true
+    BadPacketsJ:
+        enabled: true
+    BadPacketsK:
+        enabled: true
+    BadPacketsL:
+        enabled: true
+    BadPacketsM:
+        enabled: true
+    BadPacketsN:
+        enabled: true
+    BadPacketsO:
+        enabled: true
+    BadPacketsP:
+        enabled: true
+    BadPacketsQ:
+        enabled: true
+    BadPacketsR:
+        enabled: true
+    BadPacketsS:
+        enabled: true
+    BadPacketsT:
+        enabled: true
+    BadPacketsU:
+        enabled: true
+    BadPacketsV:
+        enabled: true
+    BadPacketsW:
+        enabled: true
+    BadPacketsX:
+        enabled: true
+    BadPacketsY:
+        enabled: true
+    BadPacketsZ:
+        enabled: true
+    # Detects Baritone bot-like rotation movements.
+    # Детектирует движения поворотов головы, характерные для бота Baritone.
+    Baritone:
+        enabled: true
+    ChatA:
+        enabled: true
+    ChatB:
+        enabled: true
+    ChatC:
+        enabled: true
+    ChatD:
+        enabled: true
+    # Identifies client brand name (e.g., Lunar, Forge).
+    # Определяет имя бренда клиента (например, Lunar, Forge).
+    ClientBrand:
+        enabled: true
+    # Corrects camera entity state when spectating.
+    # Корректирует состояние камеры сущности при режиме наблюдения.
+    CompensatedCameraEntity:
+        enabled: true
+    # Tracks attack/item cooldown timings.
+    # Отслеживает тайминги кулдаунов атак и предметов.
+    CompensatedCooldown:
+        enabled: true
+    # Tracks fireworks used to boost elytra flight.
+    # Отслеживает использование фейерверков для ускорения полета на элитрах.
+    CompensatedFireworks:
+        enabled: true
+    # Tracks open containers/held items. CRITICAL: Disabling breaks NoSlow/FastBreak checks.
+    # Отслеживает открытые контейнеры и предметы в руках. КРИТИЧЕСКИ: отключение ломает проверки NoSlow/FastBreak.
+    CompensatedInventory:
+        enabled: true
+    CrashA:
+        enabled: true
+    CrashB:
+        enabled: true
+    CrashC:
+        enabled: true
+    CrashD:
+        enabled: true
+    CrashE:
+        enabled: true
+    CrashF:
+        enabled: true
+    CrashG:
+        enabled: true
+    CrashH:
+        enabled: true
+    CrashI:
+        enabled: true
+    # Handles debug/verbose alerts for administrators.
+    # Обрабатывает отладочные сообщения (verbose) для администраторов.
+    DebugHandler:
+        enabled: true
+    DuplicateRotPlace:
+        enabled: true
+    ElytraA:
+        enabled: true
+    ElytraB:
+        enabled: true
+    ElytraC:
+        enabled: true
+    ElytraD:
+        enabled: true
+    ElytraE:
+        enabled: true
+    ElytraF:
+        enabled: true
+    ElytraG:
+        enabled: true
+    ElytraH:
+        enabled: true
+    ElytraI:
+        enabled: true
+    ExploitA:
+        enabled: true
+    ExploitB:
+        enabled: true
+    Explosion:
+        enabled: true
+    FabricatedPlace:
+        enabled: true
+    FarBreak:
+        enabled: true
+    FarPlace:
+        enabled: true
+    FastBreak:
+        enabled: true
+    # Detects collisions with client-side ghost blocks.
+    # Обнаруживает столкновения с призрачными блоками на стороне клиента.
+    GhostBlockDetector:
+        enabled: true
+    # Prevents client building on client-side ghost blocks.
+    # Предотвращает строительство игрока на призрачных блоках клиента.
+    GhostBlockMitigation:
+        enabled: true
+    GroundSpoof:
+        enabled: true
+    # Checks if client hit the actual model/hitbox. CRITICAL: Needed for Reach accuracy.
+    # Проверяет попадание в реальный хитбокс модели. КРИТИЧЕСКИ: необходимо для точности Reach.
+    Hitboxes:
+        enabled: true
+    InvalidBreak:
+        enabled: true
+    InvalidPlaceA:
+        enabled: true
+    InvalidPlaceB:
+        enabled: true
+    Knockback:
+        enabled: true
+    # Keeps movement history for ping compensation. CRITICAL: Disabling causes false speed/fly flags.
+    # Хранит историю движения для компенсации пинга. КРИТИЧЕСКИ: отключение вызывает ложные флаги speed/fly.
+    LastInstanceManager:
+        enabled: true
+    MultiActionsA:
+        enabled: true
+    MultiActionsB:
+        enabled: true
+    MultiActionsC:
+        enabled: true
+    MultiActionsD:
+        enabled: true
+    MultiActionsE:
+        enabled: true
+    MultiActionsF:
+        enabled: true
+    MultiActionsG:
+        enabled: true
+    MultiBreak:
+        enabled: true
+    MultiInteractA:
+        enabled: true
+    MultiInteractB:
+        enabled: true
+    MultiPlace:
+        enabled: true
+    NegativeTimer:
+        enabled: true
+    # Checks client ground state spoofing against server physics simulation.
+    # Проверяет фальсификацию статуса «на земле» клиента относительно симуляции физики.
+    NoFall:
+        enabled: true
+    # Checks movement speed while using items. CRITICAL: Needs CompensatedInventory.
+    # Проверяет скорость движения при использовании предметов. КРИТИЧЕСКИ: требует CompensatedInventory.
+    NoSlow:
+        enabled: true
+    NoSwingBreak:
+        enabled: true
+    # Validates client gamemode change confirmations.
+    # Проверяет подтверждения клиентом смены игрового режима.
+    PacketChangeGameState:
+        enabled: true
+    # Handles combat hitboxes lag/ping compensation.
+    # Управляет компенсацией задержки (ping) для хитбоксов в бою.
+    PacketEntityReplication:
+        enabled: true
+    # PacketOrderA-P: Validates correct order of client packets (e.g. eating/blocking sequences).
+    # PacketOrderA-P: Проверяет корректность порядка пакетов (например, последовательность поедания/блокирования).
+    PacketOrderA:
+        enabled: true
+    PacketOrderB:
+        enabled: true
+    PacketOrderC:
+        enabled: true
+    PacketOrderD:
+        enabled: true
+    PacketOrderE:
+        enabled: true
+    PacketOrderF:
+        enabled: true
+    PacketOrderG:
+        enabled: true
+    PacketOrderH:
+        enabled: true
+    PacketOrderI:
+        enabled: true
+    PacketOrderJ:
+        enabled: true
+    PacketOrderK:
+        enabled: true
+    PacketOrderL:
+        enabled: true
+    PacketOrderM:
+        enabled: true
+    PacketOrderN:
+        enabled: true
+    PacketOrderO:
+        enabled: true
+    PacketOrderP:
+        enabled: true
+    # Validates incoming packet sequences. CRITICAL: Disabling breaks all PacketOrder checks.
+    # Проверяет последовательность входящих пакетов. КРИТИЧЕСКИ: отключение ломает все проверки PacketOrder.
+    PacketOrderProcessor:
+        enabled: true
+    # Delays creative flight packets to handle Mojang out-of-order netcode.
+    # Задерживает пакеты полета в креативе для обхода багов сетевого кода Mojang.
+    PacketPlayerAbilities:
+        enabled: true
+    # Tracks world borders to prevent collision bypass.
+    # Отслеживает границы мира для предотвращения обхода коллизий барьера.
+    PacketWorldBorder:
+        enabled: true
+    Phase:
+        enabled: true
+    PositionBreakA:
+        enabled: true
+    PositionBreakB:
+        enabled: true
+    PositionPlace:
+        enabled: true
+    Post:
+        enabled: true
+    # Simulates client walking/gravity physics. CRITICAL: Disabling breaks all movement checks.
+    # Симулирует физику ходьбы и гравитации клиента. КРИТИЧЕСКИ: отключение ломает все проверки движения.
+    PredictionRunner:
+        enabled: true
+    # Checks combat attack range. CRITICAL: Disabling Hitboxes degrades Reach detection.
+    # Проверяет дистанцию удара в бою. КРИТИЧЕСКИ: отключение Hitboxes ухудшает детекцию Reach.
+    Reach:
+        enabled: true
+    RotationBreak:
+        enabled: true
+    RotationPlace:
+        enabled: true
+    # Blocks players from attacking themselves.
+    # Блокирует попытки игрока атаковать самого себя.
+    SelfInteract:
+        enabled: true
+    # Blocks clients from ignoring setback teleports.
+    # Блокирует попытки клиентов игнорировать телепорты отката.
+    SetbackBlocker:
+        enabled: true
+    # Handles returning players to previous safe locations. CRITICAL: Disabling breaks setbacks.
+    # Управляет возвратом игроков в безопасные точки при откатах. КРИТИЧЕСКИ: отключение ломает откаты.
+    SetbackTeleportUtil:
+        enabled: true
+    Simulation:
+        enabled: true
+    # Adjusts movement prediction for client sneaking.
+    # Корректирует предсказание движения при приседании (shift) клиента.
+    SneakingEstimator:
+        enabled: true
+    SprintA:
+        enabled: true
+    SprintB:
+        enabled: true
+    SprintC:
+        enabled: true
+    SprintD:
+        enabled: true
+    SprintE:
+        enabled: true
+    SprintF:
+        enabled: true
+    SprintG:
+        enabled: true
+    # In-memory developer verbose logging.
+    # Детальное логирование отладки для разработчиков в памяти.
+    SuperDebug:
+        enabled: true
+    # Ignores teammates in combat checks.
+    # Игнорирует союзников по команде в проверках боя.
+    TeamHandler:
+        enabled: true
+    # Validates client tick synchronization.
+    # Проверяет синхронизацию тиков клиента.
+    TickTimer:
+        enabled: true
+    # Detects client game-speed manipulation (SpeedHack/FastUse).
+    # Детектирует манипуляции со скоростью игры клиента (SpeedHack/FastUse).
+    TimerA:
+        enabled: true
+    TimerLimit:
+        enabled: true
+    TransactionOrder:
+        enabled: true
+    VehicleA:
+        enabled: true
+    VehicleB:
+        enabled: true
+    VehicleC:
+        enabled: true
+    VehicleD:
+        enabled: true
+    VehicleE:
+        enabled: true
+    VehicleF:
+        enabled: true
+    # Simulates vehicle physics (boats, pigs). CRITICAL: Disabling breaks all Vehicle checks.
+    # Симулирует физику транспорта (лодки, свиньи). КРИТИЧЕСКИ: отключение ломает все проверки транспорта.
+    VehiclePredictionRunner:
+        enabled: true
+    VehicleTimer:
+        enabled: true
+    WrongBreak:
+        enabled: true
 
 reset-item-usage-on-item-update: true
 reset-item-usage-on-attack: true
@@ -205,35 +663,57 @@ reset-item-usage-on-slot-change: true
 reset-item-usage-on-item-use: true
 
 # Grim sometimes cancels illegal packets such as with timer, after X packets in a second cancelled, when should
+# Grim иногда отменяет некорректные пакеты, например пакеты таймера; после скольких отмененных пакетов в секунду
 # we simply kick the player? This is required as some packet limiters don't count packets cancelled by grim.
+# мы должны просто кикнуть игрока? Это необходимо, так как некоторые лимитеры пакетов не учитывают пакеты, отмененные grim.
 packet-spam-threshold: 100
 # Enable this to print a stacktrace when a player is kicked due to packet-spam-threshold
+# Включите это, чтобы выводить стек вызовов (stacktrace), когда игрок кикается из-за превышения порога packet-spam-threshold
 debug-packet-cancel: false
 
 # Grim is able to enforce that a player set out of flying state cannot have more than X milliseconds of ping
+# Grim может требовать, чтобы игрок в состоянии "не летит" не имел пинг выше X миллисекунд
 # This is due to Grim not currently checking flying players
+# Это связано с тем, что Grim в настоящее время не проверяет летящих игроков
 # To disable, use -1
+# Для отключения используйте -1
 max-ping-out-of-flying: 1000
 
 # Maximum ping when a firework boost is removed from the player.
+# Максимальный пинг, при котором ускорение фейерверком удаляется у игрока.
 # This prevents high latency players from being able to use 1 firework boost with an elytra forever.
+# Это предотвращает ситуацию, когда игроки с высокой задержкой могут бесконечно летать на элитрах от 1 ускорения фейерверком.
 max-ping-firework-boost: 1000
 
 # Grim always refreshes cached permissions when a player joins and when Grim reloads,
+# Grim всегда обновляет кешированные разрешения при входе игрока и при перезагрузке Grim,
 # whether or not LuckPerms is installed.
+# независимо от того, установлен ли LuckPerms.
 # LuckPerms event hooks also refresh cached Grim permissions immediately in normal setups.
+# Перехватчики событий LuckPerms также мгновенно обновляют кешированные разрешения Grim в обычных условиях.
 # This periodic fallback is only needed for online permission changes not covered by
+# Этот периодический резервный механизм нужен только для изменений прав в реальном времени, не охваченных
 # those events, such as a custom LuckPerms context that does not call signalContextUpdate,
+# этими событиями, например, кастомный контекст LuckPerms, не вызывающий signalContextUpdate,
 # Fabric context gaps, or a non-LuckPerms permission provider that changes live.
+# пробелы в контексте Fabric или другой плагин прав (не LuckPerms), изменяющийся на лету.
 # Set to -1 to disable polling. Set to a positive value to refresh every X ticks.
+# Установите в -1 для отключения опроса. Установите положительное значение для обновления каждые X тиков.
 update-permission-ticks: -1
 
 # Schema markers — touch only if you know what you're doing.
+# Маркеры схемы — редактируйте только если понимаете, что делаете.
 #   config-flavor:  V2 = Grim 2.x build, V3 = Grim 3.x. The plugin refuses
+#   config-flavor:  V2 = сборка Grim 2.x, V3 = Grim 3.x. Плагин отказывается
 #                   to load a config whose flavor doesn't match its own
+#                   загружать конфигурацию, если тип (flavor) не соответствует его собственной
 #                   build, so a V3 config opened by a V2 jar fails fast
+#                   сборке, поэтому конфигурация V3, открытая на jar V2, быстро упадет с ошибкой
 #                   instead of silently flat-merging into the wrong keys.
+#                   вместо тихого слияния в неверные ключи.
 #   config-version: bumped on every breaking shape change. Old configs
+#   config-version: увеличивается при каждом несовместимом изменении структуры. Старые конфиги
 #                   auto-migrate up via the bundled updater on next start.
+#                   автоматически обновляются встроенным мигратором при следующем запуске.
 config-flavor: V2
 config-version: 11

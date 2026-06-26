@@ -1,5 +1,7 @@
 package ac.grim.grimac.manager;
 
+import ac.grim.grimac.checks.CheckData;
+
 import ac.grim.grimac.GrimAPI;
 import ac.grim.grimac.api.event.events.GrimPlayerSetbackEvent;
 import ac.grim.grimac.api.event.events.GrimTeleportEvent;
@@ -45,6 +47,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+@CheckData(name = "SetbackTeleportUtil")
 public class SetbackTeleportUtil extends Check implements PostPredictionCheck {
     // Sync to netty
     public final ConcurrentLinkedQueue<TeleportData> pendingTeleports = new ConcurrentLinkedQueue<>();
@@ -341,7 +344,10 @@ public class SetbackTeleportUtil extends Check implements PostPredictionCheck {
                 break;
             } else if (player.lastTransactionReceived.get() > teleportPos.getTransaction()) {
                 // The player ignored the teleport (and this teleport matters), resynchronize
-                player.checkManager.getCheck(BadPacketsN.class).flag();
+                Check badPacketsN = player.checkManager.getCheck(BadPacketsN.class);
+                if (badPacketsN.shouldProcess()) {
+                    badPacketsN.flag();
+                }
                 pendingTeleports.poll();
                 requiredSetBack.setPlugin(false);
                 if (pendingTeleports.isEmpty()) {

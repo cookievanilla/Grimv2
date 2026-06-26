@@ -1,5 +1,7 @@
 package ac.grim.grimac.utils.latency;
 
+import ac.grim.grimac.checks.CheckData;
+
 import ac.grim.grimac.checks.Check;
 import ac.grim.grimac.checks.type.PacketCheck;
 import ac.grim.grimac.player.GrimPlayer;
@@ -12,6 +14,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
+@CheckData(name = "CompensatedCameraEntity")
 public class CompensatedCameraEntity extends Check implements PacketCheck {
     private final ArrayDeque<PacketEntity> entities = new ArrayDeque<>(1);
 

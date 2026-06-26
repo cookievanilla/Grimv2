@@ -1,5 +1,7 @@
 package ac.grim.grimac.manager.init.start;
 
+import ac.grim.grimac.checks.CheckData;
+
 import ac.grim.grimac.GrimAPI;
 import ac.grim.grimac.checks.Check;
 import ac.grim.grimac.checks.type.PostPredictionCheck;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@CheckData(name = "SuperDebug")
 public final class SuperDebug extends Check implements PostPredictionCheck {
     private static final StringBuilder[] flags = new StringBuilder[256]; //  17 MB of logs in memory
 

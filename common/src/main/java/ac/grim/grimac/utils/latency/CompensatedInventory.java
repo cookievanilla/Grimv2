@@ -1,5 +1,7 @@
 package ac.grim.grimac.utils.latency;
 
+import ac.grim.grimac.checks.CheckData;
+
 import ac.grim.grimac.checks.Check;
 import ac.grim.grimac.checks.type.PacketCheck;
 import ac.grim.grimac.player.GrimPlayer;
@@ -40,6 +42,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 // Updated to support modern 1.17 protocol
+@CheckData(name = "CompensatedInventory")
 public class CompensatedInventory extends Check implements PacketCheck {
     private static final int PLAYER_INVENTORY_CASE = -1;
     private static final int UNSUPPORTED_INVENTORY_CASE = -2;

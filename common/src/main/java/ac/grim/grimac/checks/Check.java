@@ -14,7 +14,6 @@ import com.github.retrooper.packetevents.protocol.packettype.PacketTypeCommon;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.protocol.player.DiggingAction;
 import lombok.Getter;
-import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +42,9 @@ public class Check extends GrimProcessor implements AbstractCheck {
     private String stableKey = "";
 
     private boolean experimental;
-    @Setter private boolean isEnabled;
+    private boolean configurable;
+    private boolean enabledByConfig;
+    private boolean isEnabled;
 
     private boolean exemptPermission;
     private boolean noSetbackPermission;
@@ -64,20 +65,32 @@ public class Check extends GrimProcessor implements AbstractCheck {
             this.setbackVL = checkData.setback();
             this.alternativeName = checkData.alternativeName();
             this.experimental = checkData.experimental();
+            this.configurable = checkData.configurable();
             this.description = checkData.description();
             this.stableKey = checkData.stableKey();
             this.displayName = this.checkName;
+        } else {
+            this.configurable = false;
         }
 
         reload();
     }
 
     public boolean shouldModifyPackets() {
-        return isEnabled
+        return shouldProcess()
                 && !player.disableGrim
                 && !player.noModifyPacketPermission
                 && !noModifyPacketPermission
                 && !exemptPermission;
+    }
+
+    public boolean shouldProcess() {
+        return !configurable || enabledByConfig;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
+        this.enabledByConfig = enabled;
     }
 
     public final void updatePermissions() {
@@ -120,6 +133,10 @@ public class Check extends GrimProcessor implements AbstractCheck {
     }
 
     private boolean recordFlag(@NotNull Supplier<String> verbose) {
+        if (!shouldProcess()) {
+            return false;
+        }
+
         if (player.disableGrim || (experimental && !player.isExperimentalChecks()) || exemptPermission)
             return false; // Avoid calling event if disabled
 
@@ -133,6 +150,10 @@ public class Check extends GrimProcessor implements AbstractCheck {
     }
 
     private boolean recordFlag(@NotNull BinaryVerbose verbose) {
+        if (!shouldProcess()) {
+            return false;
+        }
+
         Supplier<String> rendered = verbose.rendered();
         byte[] verboseData = verbose.data();
 
@@ -214,10 +235,18 @@ public class Check extends GrimProcessor implements AbstractCheck {
 
     @Override
     public final void reload(ConfigManager configuration) {
-        decay = configuration.getDoubleElse(configName + ".decay", decay);
-        setbackVL = configuration.getDoubleElse(configName + ".setbackvl", setbackVL);
-        displayName = configuration.getStringElse(configName + ".displayname", checkName);
-        description = configuration.getStringElse(configName + ".description", description);
+        final String checkBase = configName == null ? null : "checks." + configName;
+
+        enabledByConfig = !configurable || checkBase == null || configuration.getBooleanElse(checkBase + ".enabled", true);
+        isEnabled = enabledByConfig;
+
+        if (checkBase != null) {
+            // Prefer canonical checks.<configName> paths, while keeping legacy keys as fallback for compatibility.
+            decay = configuration.getDoubleElse(checkBase + ".decay", configuration.getDoubleElse(configName + ".decay", decay));
+            setbackVL = configuration.getDoubleElse(checkBase + ".setbackvl", configuration.getDoubleElse(configName + ".setbackvl", setbackVL));
+            displayName = configuration.getStringElse(checkBase + ".displayname", configuration.getStringElse(configName + ".displayname", checkName));
+            description = configuration.getStringElse(checkBase + ".description", configuration.getStringElse(configName + ".description", description));
+        }
 
         if (setbackVL == -1) setbackVL = Double.MAX_VALUE;
         onReload(configuration);
